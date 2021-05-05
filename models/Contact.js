@@ -10,16 +10,14 @@ const contactSchema = new Schema({
   phone: {
     type: String,
     required: true,
-    unique: true,
   },
   fullName: {
     type: String,
     required: true,
-    unique: true,
   },
   avatar: {
-    data: Buffer,
-    contentType: String,
+    type: Buffer,
+    required: true,
   },
 });
 

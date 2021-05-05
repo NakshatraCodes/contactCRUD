@@ -24,6 +24,7 @@ require("./models/Contact");
 const contactsRoutes = require("./routes/contactsRoutes");
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use("/api", contactsRoutes);
 

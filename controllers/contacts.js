@@ -15,8 +15,6 @@ const avatar = multer({
 
 const getContacts = async (req, res) => {
   try {
-    await uploadFile(req, res);
-    console.log(req.file);
     const allContacts = await Contact.find({});
     console.log(allContacts);
     if (allContacts) {
@@ -37,7 +35,6 @@ const getContact = async (req, res) => {
   try {
     const { id } = req.params;
     const contact = await Contact.findOne({ _id: id });
-    console.log(contact);
     if (contact) {
       return res.json({ success: true, data: contact });
     } else {
@@ -52,10 +49,8 @@ const getContact = async (req, res) => {
 };
 const addContact = async (req, res) => {
   try {
-    const { email, phone, fullName } = req.body;
-    console.log(req.file);
+    const { email, phone, fullName } = JSON.parse(req.body.data);
     const avatar = req.file.buffer;
-    console.log(avatar);
     if (!email || !phone || !fullName) {
       return res.status(400).json({
         success: false,
@@ -63,7 +58,6 @@ const addContact = async (req, res) => {
       });
     }
     const contact = await Contact.findOne({ email });
-    console.log(contact);
     if (contact) {
       return res.json({
         success: false,
@@ -82,6 +76,7 @@ const addContact = async (req, res) => {
       });
     }
   } catch (err) {
+    console.log(err);
     return res.json({
       success: false,
       msg: err.toString(),
